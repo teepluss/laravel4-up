@@ -20,7 +20,7 @@ Once Theme is installed you need to register the service provider with the appli
 ~~~
 'providers' => array(
 
-    ''Teepluss\Up\UpServiceProvider''
+    'Teepluss\Up\UpServiceProvider'
 
 )
 ~~~
@@ -39,6 +39,12 @@ Publish config using artisan CLI.
 
 ~~~
 php artisan config:publish teepluss/up
+~~~
+
+Migrate tables.
+
+~~~
+php artisan migrate --package=teepluss/up
 ~~~
 
 ## Usage
