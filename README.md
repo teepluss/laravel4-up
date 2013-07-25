@@ -49,4 +49,4 @@ php artisan migrate --package=teepluss/up
 
 ## Usage
 
-..... To be continue .....
+Create a morph to your model

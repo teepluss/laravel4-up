@@ -177,13 +177,19 @@ class Up {
         // Get files.
         $files = $sql->get();
 
+        //sd($files->toArray());
+
         if (count($files)) foreach ($files as $file)
         {
             // Input is a name with extension, but don't need any path.
             $input = $file->name;
 
+            // Subpath from db.
+            $subpath = trim($file->path, '/');
+
             // Inject a config, then remove a file related.
             $this->uploader->inject(array(
+                'subpath'  => $subpath,
                 'onRemove' => function($result) use ($file, &$results)
                 {
                     $file->delete(false);
@@ -214,7 +220,10 @@ class Up {
 
         if ( ! empty($master) and $scale)
         {
-            $this->uploadInit()->open($master->name)->resize($scale);
+            $config = array(
+                'subpath' => trim($master->path, '/')
+            );
+            $this->uploadInit()->inject($config)->open($master->name)->resize($scale);
 
             $attachment = $this->getAttachmentProvider()->findById($master->id.'_'.$scale);
         }
