@@ -2,7 +2,7 @@
     "name": "teepluss/up",
     "description": "UP is a file uploader with polymorphic relations.",
     "keywords": ["laravel", "laravel4", "upload", "resize"],
-    "homepage": "https://github.com/teepluss/laravel-up",
+    "homepage": "https://github.com/teepluss/laravel4-up",
     "type": "library",
     "license": "MIT",
     "authors": [

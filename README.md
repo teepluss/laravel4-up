@@ -5,7 +5,7 @@ UP is a file uploader with polymorphic relations.
 ### Installation
 
 - [UP on Packagist](https://packagist.org/packages/teepluss/up)
-- [UP on GitHub](https://github.com/teepluss/laravel-up)
+- [UP on GitHub](https://github.com/teepluss/laravel4-up)
 
 To get the lastest version of Theme simply require it in your `composer.json` file.
 
