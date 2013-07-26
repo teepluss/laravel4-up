@@ -76,9 +76,10 @@ Upload file and resizing.
 ~~~php
 // Return an original file meta.
 UP::upload(Blog::find(1), Input::file('userfile'))->getMasterResult();
+UP::upload(User::find(1), Input::file('userfile'))->getMasterResult();
 
 // Return all results files uploaded including resized.
-UP::upload(Blog::find(1), Input::file('userfile'))->resize()->getResults();
+UP::upload(Product::find(1), Input::file('userfile'))->resize()->getResults();
 ~~~
 
 Look up a file path.
