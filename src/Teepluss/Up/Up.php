@@ -111,7 +111,7 @@ class Up {
         }
 
         // Using uploader to upload, then insert to db.
-        $this->uploadInit = $this->uploadInit()->add($input)->upload();
+        $this->uploadInit = $this->uploadInit($model)->add($input)->upload();
 
         return $this;
     }
