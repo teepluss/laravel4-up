@@ -49,4 +49,71 @@ php artisan migrate --package=teepluss/up
 
 ## Usage
 
-Create a morph to your model
+First you have to create a morph method for your model that want to use "UP".
+
+~~~php
+class Blog extends Eloquent {
+
+    public function .....
+
+    /**
+     * Blog has many files upload.
+
+     * @return AttachmentRelate
+     */
+    public function files()
+    {
+        return $this->morphMany('\Teepluss\Up\AttachmentRelates\Eloquent\AttachmentRelate', 'fileable');
+    }
+
+}
+~~~
+
+### After create a method "files", Blog can use "UP" to upload files.
+
+Upload file and resizing.
+
+~~~php
+// Return an original file meta.
+UP::upload(Blog::find(1), Input::file('userfile'))->getMasterResult();
+
+// Return all results files uploaded including resized.
+UP::upload(Blog::find(1), Input::file('userfile'))->resize()->getResults();
+~~~
+
+Look up a file path.
+
+~~~php
+$blogs = Blog::with('files')->get();
+
+foreach ($blogs as $blog)
+{
+    foreach ($blog->files as $file)
+    {
+        echo UP::lookup($file->attachment_id);
+
+        // or lookup with scale from config.
+
+        echo UP::lookup($file->attachment_id)->scale('l');
+    }
+}
+~~~
+
+Remove file(s) from storage.
+
+~~~php
+$attachmentId = 'b5540d7e6350589004e02e23feb3dc1f';
+
+// Remove a single file.
+UP::remove($attachmentId);
+
+// Remove all files including resized.
+UP::remove($attachmentId, true);
+~~~
+
+## Support or Contact
+
+If you have some problem, Contact teepluss@gmail.com
+
+[![Alt Buy me a beer](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](
+https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=admin%40jquerytips%2ecom&lc=US&item_name=Teepluss&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest)
