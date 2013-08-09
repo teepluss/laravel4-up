@@ -62,14 +62,14 @@ class Up {
      * @param  Object $model Morph model
      * @return Uploader
      */
-    public function uploadInit($model = null)
+    public function uploadInit($model = null, $addition = array())
     {
         $attachmentProvider = $this->getAttachmentProvider();
 
         $uploadInit = $this->uploader->inject(array(
-            'onUpload' => function($result) use ($attachmentProvider, $model)
+            'onUpload' => function($result) use ($attachmentProvider, $model, $addition)
             {
-                $attachmentProvider->create(array(
+                $data = array(
                     'id'        => $result['fileName'],
                     'master'    => $result['master'],
                     'scale'     => $result['scale'],
@@ -79,7 +79,11 @@ class Up {
                     'size'      => $result['fileSize'],
                     'mime'      => $result['mime'],
                     'dimension' => $result['dimension']
-                ));
+                );
+
+                $data = array_merge($data, $addition);
+
+                $attachmentProvider->create($data);
 
                 // Add to morph here.
                 if ($result['master'] == null and is_object($model))
@@ -100,7 +104,7 @@ class Up {
      * @param  array  $options
      * @return Up
      */
-    public function upload($model, $input, $options = array())
+    public function upload($model, $input, $addition = array())
     {
         if ( ! is_object($model)) return;
 
@@ -111,7 +115,7 @@ class Up {
         }
 
         // Using uploader to upload, then insert to db.
-        $this->uploadInit = $this->uploadInit($model)->add($input)->upload();
+        $this->uploadInit = $this->uploadInit($model, $addition)->add($input)->upload();
 
         return $this;
     }
