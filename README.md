@@ -80,6 +80,9 @@ UP::upload(User::find(1), Input::file('userfile'))->getMasterResult();
 
 // Return all results files uploaded including resized.
 UP::upload(Product::find(1), Input::file('userfile'))->resize()->getResults();
+
+// If you have other fields in table attachments.
+UP::upload(User::find(1), Input::file('userfile'), array('some_id' => 999))->getMasterResult();
 ~~~
 
 Look up a file path.
