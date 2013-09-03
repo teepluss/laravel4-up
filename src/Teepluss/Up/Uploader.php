@@ -10,7 +10,7 @@ use Illuminate\Filesystem\Filesystem;
 class Uploader {
 
     /**
-     * Config from a attach.
+     * Config from uploader.
      *
      * @var array
      */
@@ -61,10 +61,11 @@ class Uploader {
     private $results = array();
 
     /**
-     * Create a new attach instance.
+     * Create Uploader instance.
      *
-     * @param   array  $params
-     * @return  void
+     * @param Repository $config
+     * @param Request    $request
+     * @param Filesystem $files
      */
     public function __construct(Repository $config, Request $request, Filesystem $files)
     {

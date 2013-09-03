@@ -1,9 +1,20 @@
 <?php namespace Teepluss\Up;
 
+use Closure;
+use Illuminate\Config\Repository;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Cache;
 use Teepluss\Up\Uploader as Uploader;
 use Teepluss\Up\Attachments\ProviderInterface as AttachmentProviderInterface;
 
 class Up {
+
+    /**
+     * Config from main.
+     *
+     * @var array
+     */
+    public $config;
 
     /**
      * Attachment Provider.
@@ -34,13 +45,16 @@ class Up {
     protected $attachmentId;
 
     /**
-     * Up constructor.
+     * Create Up instance.
      *
+     * @param Repository                  $config
      * @param AttachmentProviderInterface $attachmentProvider
      * @param Uploader                    $uploader
      */
-    public function __construct(AttachmentProviderInterface $attachmentProvider, Uploader $uploader)
+    public function __construct(Repository $config, AttachmentProviderInterface $attachmentProvider, Uploader $uploader)
     {
+        $this->config = $config->get('up::config');
+
         $this->attachmentProvider = $attachmentProvider;
 
         $this->uploader = $uploader;
@@ -273,11 +287,11 @@ class Up {
         // Using cache to reduce request.
         $ckey = 'attachment-'.$this->attachmentId;
 
-        if ( ! $attachment = \Cache::get($ckey))
+        if ( ! $attachment = Cache::get($ckey))
         {
             $attachment = $that->getAttachmentProvider()->findById($that->attachmentId);
 
-            \Cache::put($ckey, $attachment, 60);
+            Cache::put($ckey, $attachment, 60);
         }
 
         // Having scale, but not generate yet!
@@ -290,10 +304,12 @@ class Up {
 
         if (is_object($attachment))
         {
-            return \URL::to($attachment->getAttribute('location'));
+            return URL::to($attachment->getAttribute('location'));
         }
 
-        return false;
+        $failure = array_get($this->config, 'failure');
+
+        return ($failure instanceof Closure) ? $failure($this->attachmentId, $this) : false;
     }
 
     /**

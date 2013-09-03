@@ -73,7 +73,7 @@ class UpServiceProvider extends ServiceProvider {
 		{
 			$app['up.loaded'] = true;
 
-			return new Up($app['up.attachment'], $app['up.uploader']);
+			return new Up($app['config'], $app['up.attachment'], $app['up.uploader']);
 		});
 	}
 
