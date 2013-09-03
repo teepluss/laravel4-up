@@ -307,7 +307,7 @@ class Up {
             return URL::to($attachment->getAttribute('location'));
         }
 
-        $failure = array_get($this->config, 'failure');
+        $failure = array_get($this->config, 'placeholder');
 
         return ($failure instanceof Closure) ? $failure($this->attachmentId, $this) : false;
     }

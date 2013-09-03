@@ -29,7 +29,6 @@ return array(
     'placeholder' => function($attachmentId)
     {
         //return URL::asset('placeholder/notfound.png');
-
         return 'Image not found.';
     }
 
