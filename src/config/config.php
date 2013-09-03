@@ -22,12 +22,14 @@ return array(
     | Callback
     |--------------------------------------------------------------------------
     |
-    | Image not found event.
+    | Placeholder for image not found.
     |
     */
 
-    'failure' => function($attachmentId)
+    'placeholder' => function($attachmentId)
     {
+        //return URL::asset('placeholder/notfound.png');
+
         return 'Image not found.';
     }
 
