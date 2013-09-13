@@ -17,6 +17,13 @@ class Up {
     public $config;
 
     /**
+     * Inject config.
+     *
+     * @var array
+     */
+    public $inject = array();
+
+    /**
      * Attachment Provider.
      *
      * @var Attachment
@@ -71,6 +78,19 @@ class Up {
     }
 
     /**
+     * Inject config to uploader core.
+     *
+     * @param  array  $inject
+     * @return Uploader
+     */
+    public function inject($inject = array())
+    {
+        $this->inject = $inject;
+
+        return $this;
+    }
+
+    /**
      * Init uploader.
      *
      * @param  Object $model Morph model
@@ -80,7 +100,7 @@ class Up {
     {
         $attachmentProvider = $this->getAttachmentProvider();
 
-        $uploadInit = $this->uploader->inject(array(
+        $config = array_merge(array(
             'onUpload' => function($result) use ($attachmentProvider, $model, $addition)
             {
                 $data = array(
@@ -105,7 +125,9 @@ class Up {
                     $model->files()->create(array('attachment_id' => $result['fileName']));
                 }
             }
-        ));
+        ), $this->inject);
+
+        $uploadInit = $this->uploader->inject($config);
 
         return $uploadInit;
     }
