@@ -42,7 +42,14 @@ class AttachmentRelate extends Model {
      */
     public function attachment()
     {
-        return $this->belongsTo('\Teepluss\Up\Attachments\Eloquent\Attachment');
+        $attachmentModel = \Config::get('up::attachments.model');
+
+        if ( ! $attachmentModel)
+        {
+            $attachmentModel = '\Teepluss\Up\Attachments\Eloquent\Attachment';
+        }
+
+        return $this->belongsTo($attachmentModel);
     }
 
 }
