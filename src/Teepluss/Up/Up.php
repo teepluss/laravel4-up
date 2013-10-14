@@ -326,7 +326,7 @@ class Up {
 
         if (is_object($attachment))
         {
-            return URL::to($attachment->getAttribute('location'));
+            return $this->uploader->url($attachment->getAttribute('location'));
         }
 
         $failure = array_get($this->config, 'placeholder');

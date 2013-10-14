@@ -173,7 +173,7 @@ class Uploader {
      * @param   string  $path
      * @return  string
      */
-    protected function url($path)
+    public function url($path)
     {
         return $this->config['baseUrl'].$path;
     }
