@@ -326,7 +326,14 @@ class Up {
 
         if (is_object($attachment))
         {
-            return $this->uploader->url($attachment->getAttribute('location'));
+            $location = $attachment->getAttribute('location');
+
+            if (preg_match('/^http/', $location))
+            {
+                return $location;
+            }
+
+            return $this->uploader->url($location);
         }
 
         $failure = array_get($this->config, 'placeholder');
