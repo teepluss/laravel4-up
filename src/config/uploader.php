@@ -4,15 +4,15 @@ return array(
 
     /*
     |--------------------------------------------------------------------------
-    | Upload remote transfer.
+    | Upload type.
     |--------------------------------------------------------------------------
     |
-    | Attach allow upload with remote url
-    | if you upload with "http://..." you need to set remote 'true'
+    | Up allow upload type simple, remote, base64
+    | if set true the type will be simple.
     |
     */
 
-    'remote' => false,
+    'type'  => 'simple',
 
     /*
     |--------------------------------------------------------------------------

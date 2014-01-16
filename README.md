@@ -58,7 +58,7 @@ class Blog extends Eloquent {
 
     /**
      * Blog has many files upload.
-
+     *
      * @return AttachmentRelate
      */
     public function files()

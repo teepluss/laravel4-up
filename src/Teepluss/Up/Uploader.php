@@ -188,8 +188,20 @@ class Uploader {
         // Find a base directory include appended.
         $path = $this->path($this->config['baseDir']);
 
-        // Method to use uplaod.
-        $method = ($this->config['remote'] === true) ? 'doTransfer' : 'doUpload';
+        // Support old version.
+        if (isset($this->config['remote']) and $this->config['remote'] == true)
+        {
+            $this->config['type'] = 'remote';
+        }
+
+        // Method to upload.
+        $method = 'doUpload';
+
+        switch ($this->config['type'])
+        {
+            case 'base64' : $method = 'doBase64'; break;
+            case 'remote' : $method = 'doTransfer'; break;
+        }
 
         // Call a method.
         $result = call_user_func_array(array($this, $method), array($this->file, $path));
@@ -267,6 +279,46 @@ class Uploader {
         if ($this->files->put($uploadPath, $bin))
         {
             return $this->results($uploadPath);
+        }
+
+        return false;
+    }
+
+    /**
+     * Upload from base64 image.
+     *
+     * @param  string $base64
+     * @param  string $path
+     * @return mixed
+     */
+    protected function doBase64($base64, $path)
+    {
+        // Craete upload structure directory.
+        if ( ! is_dir($path))
+        {
+            mkdir($path, 0777, true);
+        }
+
+        $base64 = trim($base64);
+
+        // Check pattern.
+        if (preg_match('|^data:image\/(.*?);base64\,(.*)|', $base64, $matches))
+        {
+            $bin = base64_decode($matches[2]);
+
+            $extension = $matches[1];
+
+            $origName = 'base64-'.time().'.'.$extension;
+
+            $filename = $this->name($origName);
+
+            // Path to write file.
+            $uploadPath = $path.$filename;
+
+            if ($this->files->put($uploadPath, $bin))
+            {
+                return $this->results($uploadPath);
+            }
         }
 
         return false;
