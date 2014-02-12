@@ -37,28 +37,28 @@ class Uploader {
      *
      * @var mixed
      */
-    private $file;
+    protected $file;
 
     /**
      * Original file uploaded result or open file.
      *
      * @var array
      */
-    private $master;
+    protected $master;
 
     /**
      * Result last file uploaded.
      *
      * @var array
      */
-    private $result = array();
+    protected $result = array();
 
     /**
      * Result of all file uplaoded include resized.
      *
      * @var array
      */
-    private $results = array();
+    protected $results = array();
 
     /**
      * Create Uploader instance.
