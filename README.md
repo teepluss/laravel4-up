@@ -97,6 +97,9 @@ foreach ($blogs as $blog)
 {
     foreach ($blog->files as $file)
     {
+        // Access attachment.
+        // var_dump($file->atatchment);
+
         echo UP::lookup($file->attachment_id);
 
         // or lookup with scale from config.
