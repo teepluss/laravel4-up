@@ -27,6 +27,9 @@ class CreateAttachmentsTable extends Migration {
 		    $table->string('dimension', 100)->nullable();
 		    $table->integer('order', 100);
 		    $table->timestamps();
+
+		    $table->index('master');
+		    $table->index('scale');
 		});
 	}
 
