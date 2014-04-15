@@ -1,3 +1,5 @@
+UP is deprecated. Please use the [UP2](https://github.com/teepluss/laravel4-up2)
+
 ## UP for Laravel 4
 
 UP is a file uploader with polymorphic relations.
