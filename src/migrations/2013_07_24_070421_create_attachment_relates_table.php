@@ -36,7 +36,11 @@ class CreateAttachmentRelatesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::dropForeign('attachment_relates_attachment_id_foreign');
+		Schema::table('attachment_relates', function($table)
+        {
+            $table->dropForeign('attachment_relates_attachment_id_foreign');
+        });
+
 		Schema::dropIfExists('attachment_relates');
 	}
 
