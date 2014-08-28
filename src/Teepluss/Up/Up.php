@@ -202,6 +202,12 @@ class Up {
         // Prepare return.
         $results = array();
 
+        // No data to remove
+        if (empty($attachmentId))
+        {
+            return $result;
+        }
+
         // Find a master.
         $sql = $this->getAttachmentProvider()->createModel()->whereId($attachmentId);
 
@@ -216,8 +222,6 @@ class Up {
 
         // Get files.
         $files = $sql->get();
-
-        //sd($files->toArray());
 
         if (count($files)) foreach ($files as $file)
         {
