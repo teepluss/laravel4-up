@@ -205,7 +205,7 @@ class Up {
         // No data to remove
         if (empty($attachmentId))
         {
-            return $result;
+            return array();
         }
 
         // Find a master.
