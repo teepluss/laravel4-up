@@ -1,6 +1,7 @@
 <?php namespace Teepluss\Up;
 
 use Closure;
+use Exception;
 use Illuminate\Config\Repository;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Cache;
@@ -352,7 +353,15 @@ class Up {
      */
     public function __toString()
     {
-        return $this->get() ?: '';
+        try
+        {
+            return $this->get() ?: '';
+        }
+        catch (Exception $e)
+        {
+            restore_error_handler();
+            trigger_error($e->getMessage());
+        }
     }
 
 }
