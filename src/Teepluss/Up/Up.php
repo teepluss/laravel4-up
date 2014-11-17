@@ -159,11 +159,12 @@ class Up {
     /**
      * Chaining uploader to resizing.
      *
+     * @param null $sizes
      * @return Up
      */
-    public function resize()
+    public function resize($sizes = null)
     {
-        $this->uploadInit->resize();
+        $this->uploadInit->resize($sizes);
 
         return $this;
     }
